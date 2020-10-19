@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StatusBar,
   TextInput,
+  Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import styles from "./styles";
 
 const Login = () => {
@@ -13,13 +15,54 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  useEffect(() => {
+    setSwitchType(0);
+  }, []);
+
   const onChangeSwitch = (type) => {
     setSwitchType(type);
   };
 
-  const onLogin = () => {};
+  const onLogin = async () => {
+    try {
+      const user = await AsyncStorage.getItem("user");
+      if (user) {
+        const { username: uName, password: pWord } = JSON.parse(user);
+        if (username === uName && password === pWord) {
+          Alert.alert("Success");
+        } else {
+          Alert.alert("Alert", "Username or Password is incorrect");
+        }
+      } else {
+        Alert.alert("Error", "Couldn't find any data. Please register.");
+      }
+    } catch (e) {
+      console.log("Login - onLogin - error => ", e);
+    }
+  };
 
-  const onSignUp = () => {};
+  const onSignUp = async () => {
+    try {
+      const jsonValue = JSON.stringify({ username, password });
+
+      console.log({ jsonValue });
+      await AsyncStorage.setItem("user", jsonValue);
+    } catch (e) {
+      console.log("Login - onSignUo - error => ", e);
+    }
+    Alert.alert("Alert", "DONE");
+    forceUpdate();
+  };
+
+  const validateForm = () => {
+    if (username === "") Alert.alert("Alert", "Username can't be empty");
+    else if (password === "") Alert.alert("Alert", "Password can't be empty");
+    else if (switchType === 0) onLogin();
+    else if (switchType === 1) onSignUp();
+  };
 
   const renderSwitch = () => {
     return (
@@ -92,8 +135,7 @@ const Login = () => {
       <View>
         <TouchableOpacity
           onPress={() => {
-            if (switchType === 0) onLogin();
-            else onSignUp();
+            validateForm();
           }}
         >
           <View style={styles.buttonWrapper}>
