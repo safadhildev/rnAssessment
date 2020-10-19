@@ -14,7 +14,7 @@ const Welcome = ({ navigation }) => {
       </Text>
       <View style={styles.imageWrapper}>
         <Image
-          source={require("../../../assets/sofa.png")}
+          source={require("../../../assets/sofa_white.png")}
           resizeMode="contain"
           style={{ width: "100%", height: "100%" }}
         />

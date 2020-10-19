@@ -13,11 +13,15 @@ import styles from "./styles";
 const Login = ({ navigation }) => {
   const [switchType, setSwitchType] = useState(0);
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const onChangeSwitch = (type) => {
     setSwitchType(type);
+    setUsername("");
+    setPassword("");
+    setName("");
   };
 
   useEffect(() => {
@@ -44,22 +48,24 @@ const Login = ({ navigation }) => {
 
   const onSignUp = async () => {
     try {
-      const jsonValue = JSON.stringify({ username, password });
+      const jsonValue = JSON.stringify({ name, username, password });
 
       console.log({ jsonValue });
       await AsyncStorage.setItem("user", jsonValue);
     } catch (e) {
       console.log("Login - onSignUo - error => ", e);
     }
-    Alert.alert("Alert", "DONE");
+    Alert.alert("Success", `You can now log in with the username ${username}`);
     setUsername("");
     setPassword("");
     setShouldUpdate(!shouldUpdate);
   };
 
   const validateForm = () => {
-    if (username === "") Alert.alert("Alert", "Username can't be empty");
-    else if (password === "") Alert.alert("Alert", "Password can't be empty");
+    if (switchType === 1 && name === "")
+      Alert.alert("Error", "Name can't be empty");
+    else if (username === "") Alert.alert("Error", "Username can't be empty");
+    else if (password === "") Alert.alert("Error", "Password can't be empty");
     else if (switchType === 0) onLogin();
     else if (switchType === 1) onSignUp();
   };
@@ -108,6 +114,16 @@ const Login = ({ navigation }) => {
   const renderForm = () => {
     return (
       <View>
+        {switchType === 1 && (
+          <TextInput
+            placeholder="Name"
+            value={name}
+            style={styles.input}
+            onChangeText={(text) => {
+              setName(text);
+            }}
+          />
+        )}
         <TextInput
           placeholder="Username"
           value={username}
@@ -151,10 +167,18 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"#FFA726"} />
-      <View style={{ backgorundColor: "#FFA726", width: "100%", height: 30 }} />
-      {renderSwitch()}
-      {renderForm()}
-      {renderButton()}
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff",
+          marginTop: 50,
+          paddingHorizontal: 30,
+        }}
+      >
+        {renderSwitch()}
+        {renderForm()}
+        {renderButton()}
+      </View>
     </View>
   );
 };

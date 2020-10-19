@@ -45,8 +45,8 @@ const Settings = () => {
       const user = await AsyncStorage.getItem("user");
 
       if (user) {
-        const { username } = JSON.parse(user);
-        setUsername(username);
+        const { name } = JSON.parse(user);
+        setUsername(name);
       }
     } catch (e) {
       console.log("Settings - getUserInfo - error => ", e);

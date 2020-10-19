@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontWeight: "bold",
     textAlign: "center",
-    marginHorizontal: 70,
-    fontSize: 30,
+    marginHorizontal: 30,
+    fontSize: 40,
+    color: "#fff",
   },
   imageWrapper: {
     width: 250,
