@@ -10,21 +10,19 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "./styles";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [switchType, setSwitchType] = useState(0);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-
-  useEffect(() => {
-    setSwitchType(0);
-  }, []);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const onChangeSwitch = (type) => {
     setSwitchType(type);
   };
+
+  useEffect(() => {
+    setSwitchType(0);
+  }, [shouldUpdate]);
 
   const onLogin = async () => {
     try {
@@ -32,7 +30,7 @@ const Login = () => {
       if (user) {
         const { username: uName, password: pWord } = JSON.parse(user);
         if (username === uName && password === pWord) {
-          Alert.alert("Success");
+          navigation.navigate("Home");
         } else {
           Alert.alert("Alert", "Username or Password is incorrect");
         }
@@ -54,7 +52,9 @@ const Login = () => {
       console.log("Login - onSignUo - error => ", e);
     }
     Alert.alert("Alert", "DONE");
-    forceUpdate();
+    setUsername("");
+    setPassword("");
+    setShouldUpdate(!shouldUpdate);
   };
 
   const validateForm = () => {

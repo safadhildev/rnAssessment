@@ -1,0 +1,53 @@
+{
+    "response":200,
+    "data":[
+        {
+            "id":0,
+            "image":"sofa",
+            "name" : "Sofa",
+            "price" : 505
+            
+        },
+        {
+            "id":1,
+            "image":"armchair",
+            "name" : "Armchair",
+            "price" : 505
+        },
+        {
+            "id":2,
+            "image":"bed",
+            "name" : "Bed",
+            "price" : 760
+        },
+        {
+            "id":3,
+            "image":"chair",
+            "name" : "Chair",
+            "price" : 45
+        }, {
+            "id":4,
+            "image":"sofa",
+            "name" : "Sofa",
+            "price" : 505
+        },
+        {
+            "id":5,
+            "image":"armchair",
+            "name" : "Armchair",
+            "price" : 505
+        },
+        {
+            "id":6,
+            "image":"bed",
+            "name" : "Bed",
+            "price" : 760
+        },
+        {
+            "id":7,
+            "image":"chair",
+            "name" : "Chair",
+            "price" : 45
+        }
+    ]
+}
