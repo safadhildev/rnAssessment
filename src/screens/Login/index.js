@@ -10,8 +10,9 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "./styles";
 
-const Login = ({ navigation }) => {
-  const [switchType, setSwitchType] = useState(0);
+const Login = ({ navigation, route }) => {
+  const { type } = route?.params;
+  const [switchType, setSwitchType] = useState(type);
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +26,7 @@ const Login = ({ navigation }) => {
   };
 
   useEffect(() => {
-    setSwitchType(0);
+    if (shouldUpdate) setSwitchType(0);
   }, [shouldUpdate]);
 
   const onLogin = async () => {
